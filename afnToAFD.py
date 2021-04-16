@@ -14,10 +14,10 @@ def afnToAFD(afn):
     print(afn)
     AFD = {}
 
-    #
+    #valida as transicoes (Remove transicoes de uma palavra para multiplos destinos)
     for estado in afn.keys():
 
-        AFD_aux = transicoesPorPalavrasGrupo(afn, [estado])
+        AFD_aux = validarTransicoes(afn, estado)
         AFD.update(AFD_aux)
 
     #Verificar determinismo
@@ -35,15 +35,20 @@ def getDestino(transicao):
     return transicao[1]
 
 # Verifica transforma multiplas transicoes em uma transicao com um grupo de estados
-def transicoesPorPalavrasGrupo(afn, estados):
+def validarTransicoes(afn, estados):
 
     estados_destinos = {}   # { palavra : [estados] }
     transicoes = []
     afd_auxiliar = {}   # { estado : [palavra, destino]] }
 
+    if type(estados) == list:
     # cria nomenclatura do novo estado
-    estados = sorted(estados)
-    novo_estado = ','.join(estados)
+        estados = sorted(estados)
+        novo_estado = ','.join(estados)
+
+    else:
+        novo_estado = estados
+        estados = [estados]
 
     #Sai caso o estado já tenha sido concluido
     if ehEstadoConcluido(novo_estado):
@@ -75,7 +80,7 @@ def transicoesPorPalavrasGrupo(afn, estados):
         afd_auxiliar[novo_estado] += [[palavra, estado_destino]]
 
     for palavra in estados_destinos.keys():
-        afd_auxiliar.update(transicoesPorPalavrasGrupo(afn, estados_destinos[palavra]))
+        afd_auxiliar.update(validarTransicoes(afn, estados_destinos[palavra]))
 
     return afd_auxiliar
 
