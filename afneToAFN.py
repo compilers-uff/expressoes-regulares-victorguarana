@@ -1,7 +1,23 @@
+from classes import AFN
 Epslon = 'ε'
 
-
 def afneToAFN(afne):
+
+    delta_afne = afne.getDelta()
+    delta_afn = limparEpsilon(delta_afne)
+
+    estados_iniciais_afne = afne.getEstadosIniciais()
+    estados_iniciais_afn = verificaSubEstados(delta_afn, estados_iniciais_afne)
+
+    estados_finais_afne = afne.getEstadosFinais()
+    estados_finais_afn = verificaSubEstados(delta_afn, estados_finais_afne)
+
+    afn = AFN(delta_afn, estados_iniciais_afn, estados_finais_afn)
+
+    return afn
+
+
+def limparEpsilon(afne):
     print("AFNe :")
     print(afne)
     AFN = {}
@@ -122,13 +138,20 @@ def percorrerCaminhoAlternativo(afne, palavra, transicao_inicial, estados_visita
 
     return transicoes_limpas
 
+def verificaSubEstados(delta, estados):
+    for estado in delta.keys():
+        if estado in estados:
+            continue
 
+        sub_estados = estado.split(',')
+        pertence = any(estado in sub_estados for estado in estados)
+        if pertence:
+            estados += estado
 
+    return estados
 
-#exemplo_afne1 = {'E7': [['ε', 'E8'], ['ε', 'E1']], 'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': ['mao', 'E3'], 'E3': ['ε', 'E6'], 'E4': ['pe', 'E5'], 'E5': ['ε', 'E6'], 'E6': [['ε', 'E1'], ['ε', 'E8']], 'E8': []}
-#exemplo_afne2 = {'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': [['a', 'E3']], 'E3': [['ε', 'E6']], 'E4': [['b', 'E5']], 'E5': [['ε', 'E6']], 'E6': [['ε', 'E7']], 'E7': [['c', 'E8']], 'E8': [['ε', 'E9']], 'E9': []}
-exemplo_afne1 = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
-afneToAFN(exemplo_afne1)
-#transicoes_limpas = limparTransicaoEpslon(exemplo_afne2, ['ε', 'E2'])
-#delta = afneToAFN(exemplo_afne2)
-#print(delta)
+delta = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
+estados_iniciais = ['E1']
+estados_finais = ['E9']
+exemplo_afne = AFN(delta, estados_iniciais, estados_finais)
+afneToAFN(exemplo_afne)

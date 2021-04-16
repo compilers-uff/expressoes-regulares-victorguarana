@@ -1,16 +1,29 @@
-_idEstado = 0
+from classes import ER
+from classes import AFN
 
 Epslon = 'ε'
 _SinaisInER = ['+', '*', '.']
 
-
+_idEstado = 0
 def getIdEstado():
     global _idEstado
     _idEstado += 1
     return _idEstado
 
+def erToAFNe(er):
+    entrada = er.getEntrada()
 
-def erToAFNE(er):
+    # pega o delta organizado linearmente
+    delta = criarDelta(entrada)
+
+    estados = list(delta.keys())
+    estado_inicial = estados[0]
+    estado_final = estados[-1]
+    afne = AFN(delta, [estado_inicial], [estado_final])
+
+    return afne
+
+def criarDelta(er):
     delta = {}
     if temSinal(er):
         sinal = getSinal(er)
@@ -28,8 +41,8 @@ def erToAFNE(er):
         # Ambos os lados tem sinais -> Recursão em ambos
         if temSinal(esquerda_geral) and temSinal(direita_geral):
 
-            delta_esquerda = erToAFNE(esquerda_geral)
-            delta_direita = erToAFNE(direita_geral)
+            delta_esquerda = criarDelta(esquerda_geral)
+            delta_direita = criarDelta(direita_geral)
 
             delta = operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita)
 
@@ -37,10 +50,9 @@ def erToAFNE(er):
 
         # Somente a esquerda tem sinal
         elif (temSinal(esquerda_geral)):
-            print("Função não testada")  #
 
             # entra na recursão
-            delta_esquerda = erToAFNE(esquerda_geral)
+            delta_esquerda = criarDelta(esquerda_geral)
 
             # Pega palavra da direita
             if (not temSinal(direita_geral)):
@@ -49,7 +61,7 @@ def erToAFNE(er):
         # Somente a direita tem sinal
         elif (temSinal(direita_geral)):
             # entra na recursão
-            delta_direita = erToAFNE(direita_geral)
+            delta_direita = criarDelta(direita_geral)
 
             # Pega palavra da direita
             if (not temSinal(esquerda_geral)):
@@ -74,10 +86,8 @@ def temSinal(er):
 
     return False
 
-
 def getSinal(er):
     return er[0]
-
 
 def getEsquerda(er):
     er_esquerda = ""
@@ -109,7 +119,6 @@ def getEsquerda(er):
 
     # print(er_esquerda)
     return er_esquerda
-
 
 def getDireita(er, esquerda):
     if getSinal(er) == '*':
@@ -146,16 +155,13 @@ def getDireita(er, esquerda):
     # print(er_direita)
     return er_direita
 
-
 def getEstadoInicial(delta):
     chave = list(delta.keys())[0]
     return chave
 
-
 def getEstadoFinal(delta):
     chave = list(delta.keys())[-1]
     return chave
-
 
 def adicionaDeltaUnico(palavra):
     delta = {}
@@ -166,7 +172,6 @@ def adicionaDeltaUnico(palavra):
     delta[estado2] = []
 
     return delta
-
 
 def adicionaDeltaInicial(sinal, inicio, final, delta):
     if sinal == '+':
@@ -214,7 +219,6 @@ def adicionaDeltaInicial(sinal, inicio, final, delta):
     # print(delta)
     return delta
 
-
 def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
     delta = {}
     if sinal == '+':
@@ -248,7 +252,6 @@ def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
         delta[estado_final_geral] = []
 
     elif sinal == '.':
-        print("Função não testada")
         estado_final_esquerda = getEstadoFinal(delta_esquerda)
         estado_direita1 = "E" + str(getIdEstado())
         estado_direita2 = "E" + str(getIdEstado())
@@ -265,11 +268,9 @@ def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
     # print(delta)
     return delta
 
-
 def operacaoDeltaDireita(sinal, esquerda, delta_direita):
     delta = {}
     if sinal == '+':
-        print("Função não testada")
         estado_inicial_direita = getEstadoInicial(delta_direita)
         estado_final_direita = getEstadoFinal(delta_direita)
         estado_esquerda1 = "E" + str(getIdEstado())
@@ -289,7 +290,6 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
         delta[estado_final_geral] = []
 
     elif sinal == '*':
-        print("Função não testada")
         estado_inicial_direita = getEstadoInicial(delta_direita)
         estado_final_direita = getEstadoFinal(delta_direita)
         estado_inicial_geral = "E" + str(getIdEstado())
@@ -300,7 +300,6 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
         delta[estado_final_direita] = [(Epslon, estado_inicial_direita), (Epslon, estado_final_geral)]
 
     elif sinal == '.':
-        print("Função não testada")
         estado_inicial_direita = getEstadoInicial(delta_direita)
         estado_esquerda1 = "E" + str(getIdEstado())
         estado_esquerda2 = "E" + str(getIdEstado())
@@ -314,7 +313,6 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
 
     # print(delta)
     return delta
-
 
 def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
     if sinal == '+':
@@ -335,7 +333,6 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
         delta[estado_final_geral] = []
 
     elif sinal == '*':
-        print("Função não testada")
         estado_inicial_esquerda = getEstadoInicial(delta_esquerda)
         estado_final_esquerda = getEstadoFinal(delta_esquerda)
         estado_inicial_geral = "E" + str(getIdEstado())
@@ -346,7 +343,6 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
         delta[estado_final_geral] = []
 
     elif sinal == '.':
-        print("Função não testada")
         estado_final_esquerda = getEstadoFinal(delta_esquerda)
         estado_inicial_direita = getEstadoInicial(delta_direita)
         estado_final_geral = "E" + str(getIdEstado())
@@ -361,22 +357,5 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
     # print(delta)
     return delta
 
-
-exmplo_er1 = "+(.(a, b), c)"
-exmplo_er2 = "+(.(a, a), .(b, b))"
-exmplo_er3 = "a"
-exmplo_er4 = "+('a', 'b')"
-exmplo_er5 = ".('a', 'b')"
-exmplo_er6 = "*(+(a, b))"
-exmplo_er7 = "*(+(mao, pe))"
-exmplo_er8 = ".(+(a, b), c)"
-
-#erToAFNE(".(.(.(a, b), c), d)") #OK
-#erToAFNE(".(.(a, b), c)") #OK
-# erToAFNE("+(a, b)")  #implentando
-# erToAFNE("+(.(a, b), .(c, d))")
-# erToAFNE("+(.(a, b), d)")
-erToAFNE(exmplo_er8)
-#delta = erToAFNE(exmplo_er8)
-#print("Final")
-#print(delta)
+exemplo_er1 = ER(".(+(a, b), c)")
+erToAFNe(exemplo_er1)
