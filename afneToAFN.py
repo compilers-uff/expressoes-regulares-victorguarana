@@ -1,12 +1,4 @@
-_idEstado = 0
 Epslon = 'ε'
-_SinaisInER = ['+', '*', '.']
-
-
-def getIdEstado():
-    global _idEstado
-    _idEstado += 1
-    return _idEstado
 
 
 def afneToAFN(afne):
@@ -133,9 +125,8 @@ def percorrerCaminhoAlternativo(afne, palavra, transicao_inicial, estados_visita
 
 
 
-exemplo_afne1 = {'E7': [['ε', 'E8'], ['ε', 'E1']], 'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': ['mao', 'E3'], 'E3': ['ε', 'E6'], 'E4': ['pe', 'E5'], 'E5': ['ε', 'E6'], 'E6': [['ε', 'E1'], ['ε', 'E8']], 'E8': []}
-exemplo_afne2 = {'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': [['a', 'E3']], 'E3': [['ε', 'E6']], 'E4': [['b', 'E5']], 'E5': [['ε', 'E6']], 'E6': [['ε', 'E7']], 'E7': [['c', 'E8']], 'E8': [['ε', 'E9']], 'E9': []}
+#exemplo_afne1 = {'E7': [['ε', 'E8'], ['ε', 'E1']], 'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': ['mao', 'E3'], 'E3': ['ε', 'E6'], 'E4': ['pe', 'E5'], 'E5': ['ε', 'E6'], 'E6': [['ε', 'E1'], ['ε', 'E8']], 'E8': []}
+#exemplo_afne2 = {'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': [['a', 'E3']], 'E3': [['ε', 'E6']], 'E4': [['b', 'E5']], 'E5': [['ε', 'E6']], 'E6': [['ε', 'E7']], 'E7': [['c', 'E8']], 'E8': [['ε', 'E9']], 'E9': []}
 #transicoes_limpas = limparTransicaoEpslon(exemplo_afne2, ['ε', 'E2'])
-delta = afneToAFN(exemplo_afne2)
-print(delta)
-##TODO evitar que percorrer caminho entre em loop
+#delta = afneToAFN(exemplo_afne2)
+#print(delta)

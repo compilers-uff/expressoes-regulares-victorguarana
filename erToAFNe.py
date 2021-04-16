@@ -376,7 +376,6 @@ exmplo_er8 = ".(+(a, b), c)"
 # erToAFNE("+(a, b)")  #implentando
 # erToAFNE("+(.(a, b), .(c, d))")
 # erToAFNE("+(.(a, b), d)")
-# TODO testar com palavas com mais de uma letra
-delta = erToAFNE(exmplo_er8)
-print("Final")
-print(delta)
+#delta = erToAFNE(exmplo_er8)
+#print("Final")
+#print(delta)
