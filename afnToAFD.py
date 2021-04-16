@@ -77,7 +77,7 @@ def validarTransicoes(afn, estados):
     afd_auxiliar[novo_estado] = []
     for palavra in estados_destinos.keys():
         estado_destino = ','.join(estados_destinos[palavra])
-        afd_auxiliar[novo_estado] += [[palavra, estado_destino]]
+        afd_auxiliar[novo_estado] += [(palavra, estado_destino)]
 
     for palavra in estados_destinos.keys():
         afd_auxiliar.update(validarTransicoes(afn, estados_destinos[palavra]))
@@ -117,9 +117,9 @@ def verificaDeterminismo(afd):
 
 
         for palavra in palavras_faltando:
-            afd[estado].append([palavra, estado_buraco])
+            afd[estado].append((palavra, estado_buraco))
 
     return afd
 
-exemplo_afne1 = {'E1': [['a', 'E3'], ['a', 'E6'], ['a', 'E7'], ['b', 'E5'], ['b', 'E6'], ['b', 'E7']], 'E2': [['a', 'E3'], ['a', 'E6'], ['a', 'E7']], 'E3': [['c', 'E8'], ['c', 'E9']], 'E4': [['b', 'E5'], ['b', 'E6'], ['b', 'E7']], 'E5': [['c', 'E8'], ['c', 'E9']], 'E6': [['c', 'E8'], ['c', 'E9']], 'E7': [['c', 'E8'], ['c', 'E9']], 'E8': [], 'E9': []}
+exemplo_afne1 = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
 delta = afnToAFD(exemplo_afne1)

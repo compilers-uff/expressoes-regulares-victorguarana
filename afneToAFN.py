@@ -65,7 +65,7 @@ def percorrerCaminhoEpsion(afne, palavra, estado_inicial, estados_visitados):
             if estado_destino in estados_visitados:
                 continue
 
-            transicoes_limpas.append([palavra, estado_destino])
+            transicoes_limpas.append((palavra, estado_destino))
 
             transicoes_limpas.extend(percorrerCaminhoEpsion(afne, palavra, estado_destino, estados_visitados))
 
@@ -106,7 +106,7 @@ def encontrarCaminhosAlternativos(afne, transicao, estados_visitados):
 
 def percorrerCaminhoAlternativo(afne, palavra, transicao_inicial, estados_visitados):
     transicoes_limpas = []
-    transicoes_limpas.append([palavra, getDestino(transicao_inicial)])
+    transicoes_limpas.append((palavra, getDestino(transicao_inicial)))
 
     #evitando recursão infinita
     estado_destino = getDestino(transicao_inicial)
@@ -127,6 +127,8 @@ def percorrerCaminhoAlternativo(afne, palavra, transicao_inicial, estados_visita
 
 #exemplo_afne1 = {'E7': [['ε', 'E8'], ['ε', 'E1']], 'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': ['mao', 'E3'], 'E3': ['ε', 'E6'], 'E4': ['pe', 'E5'], 'E5': ['ε', 'E6'], 'E6': [['ε', 'E1'], ['ε', 'E8']], 'E8': []}
 #exemplo_afne2 = {'E1': [['ε', 'E2'], ['ε', 'E4']], 'E2': [['a', 'E3']], 'E3': [['ε', 'E6']], 'E4': [['b', 'E5']], 'E5': [['ε', 'E6']], 'E6': [['ε', 'E7']], 'E7': [['c', 'E8']], 'E8': [['ε', 'E9']], 'E9': []}
+exemplo_afne1 = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
+afneToAFN(exemplo_afne1)
 #transicoes_limpas = limparTransicaoEpslon(exemplo_afne2, ['ε', 'E2'])
 #delta = afneToAFN(exemplo_afne2)
 #print(delta)

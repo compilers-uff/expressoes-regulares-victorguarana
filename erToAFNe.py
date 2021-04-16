@@ -162,7 +162,7 @@ def adicionaDeltaUnico(palavra):
     estado1 = "E" + str(getIdEstado())
     estado2 = "E" + str(getIdEstado())
 
-    delta[estado1] = [[palavra, estado2]]
+    delta[estado1] = [(palavra, estado2)]
     delta[estado2] = []
 
     return delta
@@ -179,11 +179,11 @@ def adicionaDeltaInicial(sinal, inicio, final, delta):
         estado6 = "E" + str(getIdEstado())
         # Conectando AFNe's
 
-        delta[estado1] = [[Epslon, estado2], [Epslon, estado4]]
-        delta[estado2] = [[inicio, estado3]]
-        delta[estado3] = [[Epslon, estado6]]
-        delta[estado4] = [[final, estado5]]
-        delta[estado5] = [[Epslon, estado6]]
+        delta[estado1] = [(Epslon, estado2), (Epslon, estado4)]
+        delta[estado2] = [(inicio, estado3)]
+        delta[estado3] = [(Epslon, estado6)]
+        delta[estado4] = [(final, estado5)]
+        delta[estado5] = [(Epslon, estado6)]
         delta[estado6] = []
 
     elif sinal == '*':
@@ -193,9 +193,9 @@ def adicionaDeltaInicial(sinal, inicio, final, delta):
         estado3 = "E" + str(getIdEstado())
         estado4 = "E" + str(getIdEstado())
 
-        delta[estado1] = [[Epslon, estado2], [Epslon, estado4]]
-        delta[estado2] = [[inicio, estado3]]
-        delta[estado3] = [[Epslon, estado2], [Epslon, estado4]]
+        delta[estado1] = [(Epslon, estado2), (Epslon, estado4)]
+        delta[estado2] = [(inicio, estado3)]
+        delta[estado3] = [(Epslon, estado2), (Epslon, estado4)]
         delta[estado4] = []
 
     elif sinal == '.':
@@ -205,9 +205,9 @@ def adicionaDeltaInicial(sinal, inicio, final, delta):
         estado3 = "E" + str(getIdEstado())
         estado4 = "E" + str(getIdEstado())
 
-        delta[estado1] = [[inicio, estado2]]
-        delta[estado2] = [[Epslon, estado3]]
-        delta[estado3] = [[final, estado4]]
+        delta[estado1] = [(inicio, estado2)]
+        delta[estado2] = [(Epslon, estado3)]
+        delta[estado3] = [(final, estado4)]
         delta[estado4] = []
 
     # print("Resultado: ")
@@ -225,14 +225,14 @@ def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_inicial_esquerda], [Epslon, estado_direita1]]
+        delta[estado_inicial_geral] = [(Epslon, estado_inicial_esquerda), (Epslon, estado_direita1)]
 
         delta.update(delta_esquerda)
 
-        delta[estado_direita1] = [[direita, estado_direita2]]
-        delta[estado_direita2] = [[Epslon, estado_final_geral]]
+        delta[estado_direita1] = [(direita, estado_direita2)]
+        delta[estado_direita2] = [(Epslon, estado_final_geral)]
 
-        delta[estado_final_esquerda] = [[Epslon, estado_final_geral]]
+        delta[estado_final_esquerda] = [(Epslon, estado_final_geral)]
 
         delta[estado_final_geral] = []
 
@@ -242,9 +242,9 @@ def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_final_geral], [Epslon, estado_inicial_esquerda]]
+        delta[estado_inicial_geral] = [(Epslon, estado_final_geral), (Epslon, estado_inicial_esquerda)]
         delta.update(delta_esquerda)
-        delta[estado_final_esquerda] = [[Epslon, estado_inicial_esquerda], [Epslon, estado_final_geral]]
+        delta[estado_final_esquerda] = [(Epslon, estado_inicial_esquerda), (Epslon, estado_final_geral)]
         delta[estado_final_geral] = []
 
     elif sinal == '.':
@@ -256,9 +256,9 @@ def operacaoDeltaEsquerda(sinal, delta_esquerda, direita):
 
         delta.update(delta_esquerda)
 
-        delta[estado_final_esquerda] = [[Epslon, estado_direita1]]
-        delta[estado_direita1] = [[direita, estado_direita2]]
-        delta[estado_direita2] = [[Epslon, estado_final_geral]]
+        delta[estado_final_esquerda] = [(Epslon, estado_direita1)]
+        delta[estado_direita1] = [(direita, estado_direita2)]
+        delta[estado_direita2] = [(Epslon, estado_final_geral)]
 
         delta[estado_final_geral] = []
 
@@ -277,14 +277,14 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_inicial_direita], [Epslon, estado_esquerda1]]
+        delta[estado_inicial_geral] = [(Epslon, estado_inicial_direita), (Epslon, estado_esquerda1)]
 
-        delta[estado_esquerda1] = [[esquerda, estado_esquerda2]]
-        delta[estado_esquerda2] = [[Epslon, estado_final_geral]]
+        delta[estado_esquerda1] = [(esquerda, estado_esquerda2)]
+        delta[estado_esquerda2] = [(Epslon, estado_final_geral)]
 
         delta.update(delta_direita)
 
-        delta[estado_final_direita] = [[Epslon, estado_final_geral]]
+        delta[estado_final_direita] = [(Epslon, estado_final_geral)]
 
         delta[estado_final_geral] = []
 
@@ -295,9 +295,9 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_final_geral], Epslon, estado_inicial_direita]
+        delta[estado_inicial_geral] = [(Epslon, estado_final_geral), (Epslon, estado_inicial_direita)]
         delta.update(delta_direita)
-        delta[estado_final_direita] = [[Epslon, estado_inicial_direita], [Epslon, estado_final_geral]]
+        delta[estado_final_direita] = [(Epslon, estado_inicial_direita), (Epslon, estado_final_geral)]
 
     elif sinal == '.':
         print("Função não testada")
@@ -306,9 +306,9 @@ def operacaoDeltaDireita(sinal, esquerda, delta_direita):
         estado_esquerda2 = "E" + str(getIdEstado())
         estado_inicial_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_esquerda1]]
-        delta[estado_esquerda1] = [[esquerda, estado_esquerda2]]
-        delta[estado_esquerda2] = [[Epslon, estado_inicial_direita]]
+        delta[estado_inicial_geral] = [(Epslon, estado_esquerda1)]
+        delta[estado_esquerda1] = [(esquerda, estado_esquerda2)]
+        delta[estado_esquerda2] = [(Epslon, estado_inicial_direita)]
 
         delta.update(delta_direita)
 
@@ -325,12 +325,12 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_inicial_esquerda], [Epslon, estado_inicial_direita]]
+        delta[estado_inicial_geral] = [(Epslon, estado_inicial_esquerda), (Epslon, estado_inicial_direita)]
 
         delta.update(delta_esquerda)
-        delta[estado_final_esquerda] = [[Epslon, estado_final_geral]]
+        delta[estado_final_esquerda] = [(Epslon, estado_final_geral)]
         delta.update(delta_direita)
-        delta[estado_final_direita] = [[Epslon, estado_final_geral]]
+        delta[estado_final_direita] = [(Epslon, estado_final_geral)]
 
         delta[estado_final_geral] = []
 
@@ -341,8 +341,8 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
         estado_inicial_geral = "E" + str(getIdEstado())
         estado_final_geral = "E" + str(getIdEstado())
 
-        delta[estado_inicial_geral] = [[Epslon, estado_final_geral], [Epslon, estado_inicial_esquerda]]
-        delta[estado_final_esquerda] = [[Epslon, estado_inicial_esquerda], [Epslon, estado_final_geral]]
+        delta[estado_inicial_geral] = [(Epslon, estado_final_geral), (Epslon, estado_inicial_esquerda)]
+        delta[estado_final_esquerda] = [(Epslon, estado_inicial_esquerda), (Epslon, estado_final_geral)]
         delta[estado_final_geral] = []
 
     elif sinal == '.':
@@ -354,7 +354,7 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
         delta.update(delta_esquerda)
         delta.update(delta_direita)
 
-        delta[estado_final_esquerda] = [[Epslon, estado_inicial_direita], [Epslon, estado_final_geral]]
+        delta[estado_final_esquerda] = [(Epslon, estado_inicial_direita), (Epslon, estado_final_geral)]
 
         delta[estado_final_geral] = []
 
@@ -371,11 +371,12 @@ exmplo_er6 = "*(+(a, b))"
 exmplo_er7 = "*(+(mao, pe))"
 exmplo_er8 = ".(+(a, b), c)"
 
-# erToAFNE(".(.(.(a, b), c), d)") #OK
-# erToAFNE(".(.(a, b), c)") #OK
+#erToAFNE(".(.(.(a, b), c), d)") #OK
+#erToAFNE(".(.(a, b), c)") #OK
 # erToAFNE("+(a, b)")  #implentando
 # erToAFNE("+(.(a, b), .(c, d))")
 # erToAFNE("+(.(a, b), d)")
+erToAFNE(exmplo_er8)
 #delta = erToAFNE(exmplo_er8)
 #print("Final")
 #print(delta)
