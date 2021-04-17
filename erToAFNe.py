@@ -72,11 +72,11 @@ def criarDelta(er):
     else:
         delta = adicionaDeltaUnico(er)
 
-    print("============================================================")
-    print("ER: " + er)
-    print(delta)
-    print("============================================================")
-    print("\n")
+    #print("============================================================")
+    #print("ER: " + er)
+    #print(delta)
+    #print("============================================================")
+    #print("\n")
     return delta
 
 
@@ -357,5 +357,5 @@ def operacaoDeltaDuplo(sinal, delta, delta_esquerda, delta_direita):
     # print(delta)
     return delta
 
-exemplo_er1 = ER(".(+(a, b), c)")
-erToAFNe(exemplo_er1)
+#exemplo_er1 = ER(".(+(a, b), c)")
+#erToAFNe(exemplo_er1)

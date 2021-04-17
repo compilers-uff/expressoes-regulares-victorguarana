@@ -8,6 +8,7 @@ class ER:
     def getEntrada(self):
         return self.entrada
 
+
 class AFN:
 
     def __init__(self, delta, estados_iniciais, estados_finais):
@@ -23,6 +24,14 @@ class AFN:
 
     def getEstadosFinais(self):
         return self.estados_finais
+
+    def printar(self):
+        print('==============================')
+        print('AFN:')
+        print('Estados iniciais: ' + str(self.estados_iniciais))
+        print('Estados finais: ' + str(self.estados_finais))
+        print(self.delta)
+        print('==============================')
 
 class AFD:
     delta = {}
@@ -42,3 +51,11 @@ class AFD:
 
     def getEstadosFinais(self):
         return self.estados_finais
+
+    def printar(self):
+        print('==============================')
+        print('AFD:')
+        print('Estados iniciais: ' + str(self.estados_iniciais))
+        print('Estados finais: ' + str(self.estados_finais))
+        print(self.delta)
+        print('==============================')

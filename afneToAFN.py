@@ -18,8 +18,8 @@ def afneToAFN(afne):
 
 
 def limparEpsilon(afne):
-    print("AFNe :")
-    print(afne)
+    #print("AFNe :")
+    #print(afne)
     AFN = {}
     for estado in afne.keys():
         transicao_limpa = []
@@ -32,8 +32,8 @@ def limparEpsilon(afne):
                 transicao_limpa.extend(adicionarTransicoesComPalavra(afne, estado, transicao))
 
         AFN[estado] = transicao_limpa
-    print("AFN:")
-    print(AFN)
+    #print("AFN:")
+    #print(AFN)
     return AFN
 
 def getPalavra(transicao):
@@ -150,8 +150,8 @@ def verificaSubEstados(delta, estados):
 
     return estados
 
-delta = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
-estados_iniciais = ['E1']
-estados_finais = ['E9']
-exemplo_afne = AFN(delta, estados_iniciais, estados_finais)
-afneToAFN(exemplo_afne)
+#delta = {'E1': [('ε', 'E2'), ('ε', 'E4')], 'E2': [('a', 'E3')], 'E3': [('ε', 'E6')], 'E4': [('b', 'E5')], 'E5': [('ε', 'E6')], 'E6': [('ε', 'E7')], 'E7': [('c', 'E8')], 'E8': [('ε', 'E9')], 'E9': []}
+#estados_iniciais = ['E1']
+#estados_finais = ['E9']
+#exemplo_afne = AFN(delta, estados_iniciais, estados_finais)
+#afneToAFN(exemplo_afne)

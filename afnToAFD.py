@@ -13,8 +13,6 @@ def ehEstadoConcluido(estado):
 
 
 def afnToAFD(afn):
-    print("AFN:")
-    print(afn)
 
     delta_afd = {}
     delta = afn.getDelta()
@@ -29,14 +27,14 @@ def afnToAFD(afn):
     delta_afd = verificaDeterminismo(delta_afd)
 
 
-    estados_iniciais_afne = afn.getEstadosIniciais()
-    estados_iniciais_afn = verificaSubEstados(delta_afd, estados_iniciais_afne)
+    estados_iniciais_afn = afn.getEstadosIniciais()
+    estados_iniciais_afd = verificaSubEstados(delta_afd, estados_iniciais_afn)
 
-    estados_finais_afne = afn.getEstadosFinais()
-    estados_finais_afn = verificaSubEstados(delta_afd, estados_finais_afne)
+    estados_finais_afn = afn.getEstadosFinais()
+    estados_finais_afd = verificaSubEstados(delta_afd, estados_finais_afn)
 
 
-    afd = AFD(delta_afd, estados_iniciais, estados_finais)
+    afd = AFD(delta_afd, estados_iniciais_afd, estados_finais_afd)
 
     return afd
 
@@ -117,7 +115,7 @@ def verificaDeterminismo(delta):
         estado_id += 1
         estado_buraco = 'E' + str(estado_id)
 
-
+    buraco_usado = False
     for estado in estados:
 
         #verifica qual palavra esta faltando
@@ -130,6 +128,13 @@ def verificaDeterminismo(delta):
 
         for palavra in palavras_faltando:
             delta[estado].append((palavra, estado_buraco))
+            buraco_usado = True
+
+    if buraco_usado:
+        delta[estado_buraco] = []
+        for palavra in palavras:
+            delta[estado_buraco].append((palavra, estado_buraco))
+
 
     return delta
 
@@ -145,8 +150,8 @@ def verificaSubEstados(delta, estados):
 
     return estados
 
-delta = {'E1': [('a', 'E3'), ('a', 'E6'), ('a', 'E7'), ('b', 'E5'), ('b', 'E6'), ('b', 'E7')], 'E2': [('a', 'E3'), ('a', 'E6'), ('a', 'E7')], 'E3': [('c', 'E8'), ('c', 'E9')], 'E4': [('b', 'E5'), ('b', 'E6'), ('b', 'E7')], 'E5': [('c', 'E8'), ('c', 'E9')], 'E6': [('c', 'E8'), ('c', 'E9')], 'E7': [('c', 'E8'), ('c', 'E9')], 'E8': [], 'E9': []}
-estados_iniciais = ['E1']
-estados_finais = ['E9']
-exemplo_afn = AFN(delta, estados_iniciais, estados_finais)
-afnToAFD(exemplo_afn)
+#delta = {'E1': [('a', 'E3'), ('a', 'E6'), ('a', 'E7'), ('b', 'E5'), ('b', 'E6'), ('b', 'E7')], 'E2': [('a', 'E3'), ('a', 'E6'), ('a', 'E7')], 'E3': [('c', 'E8'), ('c', 'E9')], 'E4': [('b', 'E5'), ('b', 'E6'), ('b', 'E7')], 'E5': [('c', 'E8'), ('c', 'E9')], 'E6': [('c', 'E8'), ('c', 'E9')], 'E7': [('c', 'E8'), ('c', 'E9')], 'E8': [], 'E9': []}
+#estados_iniciais = ['E1']
+#estados_finais = ['E9']
+#exemplo_afn = AFN(delta, estados_iniciais, estados_finais)
+#afnToAFD(exemplo_afn)
